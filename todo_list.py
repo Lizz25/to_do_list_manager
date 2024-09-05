@@ -3,11 +3,14 @@ class TodoListManager():
         self.task = []
 
     def add_task(self, task):
-        self.task.append({"Title": task, "status": "Pending"})
+        if not any(t["Title"] == task for t in self.task):
+            self.task.append({"Title": task, "status": "Pending"})
+        else:
+            print(f"Task '{task}' already exists.")
 
     def list_task(self):
         return [task["Title"] for task in self.task]
-    
+
     def mark_as_completed(self, task):
         for t in self.task:
             if t["Title"] == task:
@@ -16,15 +19,15 @@ class TodoListManager():
     def clear_tasks(self):
         self.task = []
 
-    def edit_task(self, old_task, new_task, status = "Pending"):
+    def edit_task(self, old_task, new_task, status="Pending"):
         for t in self.task:
             if t["Title"] == old_task:
                 t["Title"] = new_task
                 t["status"] = status
-    
+
     def filter_by_status(self, status):
         return [task["Title"] for task in self.task if task["status"] == status]
-    
+
 if __name__ == "__main__":
     todo_manager = TodoListManager()
     while True:
@@ -73,4 +76,3 @@ if __name__ == "__main__":
             break
         else:
             print("Invalid option. Please select a valid option.")
-    
